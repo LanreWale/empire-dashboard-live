@@ -15,14 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
         row.c.forEach(cell => {
           let value = cell?.v ?? "";
 
-          // Format Google Sheets date objects
-          if (typeof value === "object" && value.f) {
-            value = value.f;
-          } else if (typeof value === "string" && value.startsWith("Date(")) {
-            const match = value.match(/Date\(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(\\d+)\/);
-            if (match) {
-              const [_, y, m, d, h, mi, s] = match.map(Number);
-              const dateObj = new Date(y, m, d, h, mi, s);
+          // Convert Google Sheets raw date format: Date(1899,11,30,0,0,0)
+          if (typeof value === "string" && value.startsWith("Date(")) {
+            const parts = value.match(/Date\(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(\\d+)\/);
+            if (parts) {
+              const [_, year, month, day, hour, minute, second] = parts.map(Number);
+              const dateObj = new Date(year, month, day, hour, minute, second);
               value = dateObj.toLocaleString();
             }
           }
