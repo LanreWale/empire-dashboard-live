@@ -1,0 +1,33 @@
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: #ffffff;
+  text-align: center;
+  padding: 50px;
+}
+
+.welcome-container, .dashboard-container {
+  max-width: 600px;
+  margin: auto;
+  background-color: rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
+
+.enter-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 30px;
+  background-color: #00c6ff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.enter-button:hover {
+  background-color: #0072ff;
+}
