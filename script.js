@@ -15,13 +15,20 @@ document.addEventListener("DOMContentLoaded", function () {
         row.c.forEach(cell => {
           let value = cell?.v ?? "";
 
-          // Convert Google Sheets raw date format: Date(1899,11,30,0,0,0)
-          if (typeof value === "string" && value.startsWith("Date(")) {
-            const parts = value.match(/Date\(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(\\d+)\/);
-            if (parts) {
-              const [_, year, month, day, hour, minute, second] = parts.map(Number);
-              const dateObj = new Date(year, month, day, hour, minute, second);
+          // Convert raw Google Sheets date objects like Date(1899,11,30,0,0,0)
+          if (typeof value === "string" && value.includes("Date(")) {
+            try {
+              const dateParts = value
+                .replace("Date(", "")
+                .replace(")", "")
+                .split(",")
+                .map(x => parseInt(x));
+              const [y, m, d, h, mi, s] = dateParts;
+              const dateObj = new Date(y, m, d, h, mi, s);
               value = dateObj.toLocaleString();
+            } catch (e) {
+              // fallback if error
+              value = value;
             }
           }
 
